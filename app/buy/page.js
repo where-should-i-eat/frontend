@@ -51,44 +51,14 @@ export default function Home() {
       throw new Error(response.statusText);
     }
 
-    console.log("RESPONSE SUCCESSFUL")
-    const data = response.body;
+    console.log("RESPONSE SUCCESSFUL", response)
+    const data = response.data;
     if (!data) {
       return;
     }
 
     setLoading(false);
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-    let isFirst = true;
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-
-      if (isFirst) {
-        isFirst = false;
-        setMessages((messages) => [
-          ...messages,
-          {
-            role: "assistant",
-            content: chunkValue
-          }
-        ]);
-      } else {
-        setMessages((messages) => {
-          const lastMessage = messages[messages.length - 1];
-          const updatedMessage = {
-            ...lastMessage,
-            content: lastMessage.content + chunkValue
-          };
-          return [...messages.slice(0, -1), updatedMessage];
-        });
-      }
-    }
+    setMessages(data["messages"]);
   };
 
   const handleReset = () => {
