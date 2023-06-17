@@ -6,6 +6,7 @@ import { Message } from "@/types";
 import Head from "next/head";
 import NoSSR from 'react-no-ssr';
 import { useEffect, useRef, useState } from "react";
+import axios from 'axios'
 
 export default function Home() {
   const [messages, setMessages] = useState([]);
@@ -23,25 +24,35 @@ export default function Home() {
     setMessages(updatedMessages);
     setLoading(true);
 
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        messages: updatedMessages
-      })
-    });
+    const backendUrl = process.env.BACKEND_URL;
 
-    if (!response.ok) {
+    // const response = await fetch("/api/chat", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     messages: updatedMessages
+    //   })
+    // });
+    console.log("Sending to ", backendUrl)
+    const response = await axios.post(`${backendUrl}/api/chat`, 
+      {messages: updatedMessages},
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      )
+
+    if (response.status!=200) {
       setLoading(false);
-      print(response)
-      console.log("RESPONSE FAILED")
+      console.log("RESPONSE FAILED:", response)
       throw new Error(response.statusText);
     }
 
+    console.log("RESPONSE SUCCESSFUL")
     const data = response.body;
-
     if (!data) {
       return;
     }
