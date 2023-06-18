@@ -1,4 +1,4 @@
-import { Message } from "@/types";
+import { Message, ReplaceResult, ButtonProps } from "@/types";
 import React from "react";
 import { FC } from "react";
 
@@ -12,18 +12,14 @@ import "swiper/css/navigation";
 
 interface Props {
   message: Message;
-  onClickTag: Function
+  onClickTag: Function;
 }
 
 export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
   const handleClick = (content: string) => {
-    onClickTag(content)
+    onClickTag(content);
     // console.log(content);
   };
-
-  interface ButtonProps {
-    content: string;
-  }
 
   function Button({ content }: ButtonProps): JSX.Element {
     return (
@@ -35,16 +31,6 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
       </button>
     );
   }
-
-  interface ParagraphProps {
-    content: string;
-  }
-
-  function Paragraph({ content }: ParagraphProps): JSX.Element {
-    return <p>{content}</p>;
-  }
-
-  type ReplaceResult = JSX.Element | string;
 
   function replaceWithButtons(str: string): ReplaceResult[] {
     const regex = /\*(.*?)\*/g;
