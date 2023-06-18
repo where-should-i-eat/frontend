@@ -133,7 +133,7 @@ export default function Home() {
               <div className="flex flex-col rounded-lg px-2 sm:p-4">
                 {messages.map((message, index) => (
                   <div key={index} className="my-1 sm:my-1.5">
-                    <ChatMessage message={message} />
+                    <ChatMessage message={message} onClickTag={(tag)=>{handleSend({role:"user", content:tag})}}/>
                   </div>
                 ))}
                 {loading && (

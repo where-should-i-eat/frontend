@@ -12,11 +12,13 @@ import "swiper/css/navigation";
 
 interface Props {
   message: Message;
+  onClickTag: Function
 }
 
-export const ChatMessage: FC<Props> = ({ message }) => {
+export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
   const handleClick = (content: string) => {
-    console.log(content);
+    onClickTag(content)
+    // console.log(content);
   };
 
   interface ButtonProps {
