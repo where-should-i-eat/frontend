@@ -26,15 +26,6 @@ export default function Home() {
 
     const backendUrl = process.env.BACKEND_URL;
 
-    // const response = await fetch("/api/chat", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     messages: updatedMessages
-    //   })
-    // });
     console.log("Sending to ", backendUrl)
     const response = await axios.post(`${backendUrl}/api/chat`, 
       {messages: updatedMessages},
@@ -79,6 +70,14 @@ export default function Home() {
       {
         role: "assistant",
         content: `Hi there! I'm Chatbot UI, an AI assistant. I can help you with things like answering questions, providing information, and helping with tasks. How can I help you?`
+      },
+      {
+        role: "assistant-image",
+        content: `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`
+      },
+      {
+        role: "assistant-images",
+        content: [`https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`, `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`, `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`]
       }
     ]);
   }, []);
@@ -106,7 +105,7 @@ export default function Home() {
         <Navbar />
 
         <div className="flex-1 overflow-auto sm:px-10 pb-4 sm:pb-10">
-          <div className="max-w-[800px] mx-auto mt-4 sm:mt-12">
+          <div className="max-w-[900px] mx-auto mt-4 sm:mt-12">
             <Chat
               messages={messages}
               loading={loading}
