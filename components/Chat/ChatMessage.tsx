@@ -73,8 +73,11 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
         >
           {message.content.map((url, index) => {
             return (
-              <SwiperSlide key={index}>
-                <img className="h-full block m-auto" src={url}></img>
+              <SwiperSlide className="text-center" key={index}>
+                <img
+                  className="h-full m-auto block object-cover align-middle"
+                  src={url}
+                ></img>
               </SwiperSlide>
             );
           })}
@@ -92,7 +95,7 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
     message.content.center as any;
     const renderMarkers = (map: any, maps: any) => {
       ((message.content as any).markers as any).forEach((marker_info: any) => {
-        console.log("Rendering Marker", marker_info)
+        console.log("Rendering Marker", marker_info);
         let marker = new maps.Marker({
           position: {
             lat: marker_info.lat,
@@ -104,7 +107,7 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
         let infowindow = new maps.InfoWindow({
           content: marker_info.title,
         });
-        marker.addListener('click', function () {
+        marker.addListener("click", function () {
           console.log(marker_info.link);
           window.open(marker_info.link);
         });
