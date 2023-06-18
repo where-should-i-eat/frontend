@@ -42,8 +42,8 @@ export default [
       //     center: { lat: 40.73, lng: -73.93 },
       //     zoom: 12,
       //     markers: [
-      //       { lat: 40.73, lng: -73.93, title: "This is a Marker" },
-      //       { lat: 40.63, lng: -73.89, title: "This is Marker 2" },
+      //       { lat: 40.73, lng: -73.93, title: "This is a Marker", link: "https://www.google.com/maps/place/?q=place_id:ChIJS4QZQC98hYARNqDnhxFehoI&key=AIzaSyApB2EHBitg3ROhOl9gSpeVGbYN47KvlVo"},
+      //       { lat: 40.63, lng: -73.89, title: "This is Marker 2", link: "https://www.google.com/maps/place/?q=place_id:ChIJS4QZQC98hYARNqDnhxFehoI&key=AIzaSyApB2EHBitg3ROhOl9gSpeVGbYN47KvlVo" },
       //     ],
       //   },
       // },

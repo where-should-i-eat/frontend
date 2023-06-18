@@ -33,6 +33,10 @@ export default function Home() {
     setMessages(updatedMessages);
     setLoading(true);
 
+    if (location === undefined){
+      getGeoLocation()
+    }
+
     const backendUrl = process.env.BACKEND_URL;
 
     console.log('Sending to ', backendUrl);

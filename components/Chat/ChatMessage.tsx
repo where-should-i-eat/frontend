@@ -104,6 +104,10 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
         let infowindow = new maps.InfoWindow({
           content: marker_info.title,
         });
+        marker.addListener('click', function () {
+          console.log(marker_info.link);
+          window.open(marker_info.link);
+        });
         infowindow.open(map, marker);
       });
     };
