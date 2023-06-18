@@ -92,6 +92,7 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
     message.content.center as any;
     const renderMarkers = (map: any, maps: any) => {
       ((message.content as any).markers as any).forEach((marker_info: any) => {
+        console.log("Rendering Marker", marker_info)
         let marker = new maps.Marker({
           position: {
             lat: marker_info.lat,
