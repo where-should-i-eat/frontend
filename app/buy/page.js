@@ -84,7 +84,8 @@ export default function Home() {
         content: {
           center: {lat: 40.73, lng: -73.93}, 
           zoom: 12,
-          marker: {lat: 40.73, lng: -73.93, title: "This is a Marker"}
+          markers: [ {lat: 40.73, lng: -73.93, title: "This is a Marker"}, 
+              {lat: 40.63, lng: -73.89, title: "This is Marker 2"}]
         }
       },
     ]);

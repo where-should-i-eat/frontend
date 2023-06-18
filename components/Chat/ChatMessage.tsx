@@ -38,23 +38,22 @@ export const ChatMessage: FC<Props> = ({ message }) => {
     console.log(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
     message.content.center as any;
     const renderMarkers = (map:any, maps:any) => {
-      let marker = new maps.Marker({
-        position: {
-          lat: ((message.content as any).marker as any).lat,
-          lng: ((message.content as any).marker as any).lng,
-        },
-        map,
-        title: ((message.content as any).marker as any).title,
-      });
-      let infowindow = new maps.InfoWindow({
-        content: ((message.content as any).marker as any).title,
-      });
-
-      marker.addListener('click', function () {
+      ((message.content as any).markers as any).forEach((marker_info:any) => {
+        let marker = new maps.Marker({
+          position: {
+            lat: marker_info.lat,
+            lng: marker_info.lng,
+          },
+          map,
+          title: marker_info.title,
+        });
+        let infowindow = new maps.InfoWindow({
+          content: marker_info.title,
+        });
         infowindow.open(map, marker);
       });
       
-      return marker;
+
     };
     return (
       <div
