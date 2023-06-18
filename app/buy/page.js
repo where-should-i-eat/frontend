@@ -16,6 +16,7 @@ import axios from "axios";
 export default function Home() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState({ lat: 40.73, lng: -73.93});
 
   const messagesEndRef = useRef(null);
 
@@ -34,7 +35,7 @@ export default function Home() {
     console.log("Sending to ", backendUrl);
     const response = await axios.post(
       `${backendUrl}/api/chat`,
-      { messages: updatedMessages },
+      { messages: updatedMessages, location: location },
       {
         headers: {
           "Content-Type": "application/json",
@@ -67,8 +68,27 @@ export default function Home() {
     ]);
   };
 
+  function getGeoLocation(){
+    console.log("Getting Location")
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation not supported");
+    }
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      setLocation({lat:latitude, lng: longitude })
+      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+    }
+    function error() {
+      console.log("Unable to retrieve your location");
+    }
+  }
+
   useEffect(() => {
     scrollToBottom();
+    getGeoLocation();
   }, [messages]);
 
   useEffect(() => {
