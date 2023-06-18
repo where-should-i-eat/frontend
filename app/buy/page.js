@@ -150,7 +150,7 @@ export default function Home() {
           </div>
           <Footer />
         </div>
-        <div className="flex h-[30px] sm:h-[56px] py-2 px-8 items-center justify-center">
+        <div className="flex h-[30px] py-2 px-8 items-center justify-center">
       <div className="mt-2 w-full lg:w-2/3">
         <ChatInput onSend={handleSend} />
       </div>
