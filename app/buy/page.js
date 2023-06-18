@@ -1,5 +1,10 @@
 "use client";
 import { Chat } from "@/components/Chat/Chat";
+import { ChatInput } from "@/components/Chat/ChatInput";
+import { ResetChat } from "@/components/Chat/ResetChat";
+import { ChatMessage } from "@/components/Chat/ChatMessage";
+import { ChatLoader } from "@/components/Chat/ChatLoader";
+
 import { Footer } from "@/components/Layout/Footer";
 import { Navbar } from "@/components/Layout/Navbar";
 import { Message } from "@/types";
@@ -72,29 +77,29 @@ export default function Home() {
         role: "assistant",
         content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. To begin, what type of cuisine you are in the mood for?`,
       },
-      {
-        role: "assistant-image",
-        content: `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
-      },
-      {
-        role: "assistant-images",
-        content: [
-          `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
-          `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
-          `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
-        ],
-      },
-      {
-        role: "assistant-map",
-        content: {
-          center: { lat: 40.73, lng: -73.93 },
-          zoom: 12,
-          markers: [
-            { lat: 40.73, lng: -73.93, title: "This is a Marker" },
-            { lat: 40.63, lng: -73.89, title: "This is Marker 2" },
-          ],
-        },
-      },
+      // {
+      //   role: "assistant-image",
+      //   content: `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
+      // },
+      // {
+      //   role: "assistant-images",
+      //   content: [
+      //     `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
+      //     `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
+      //     `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`,
+      //   ],
+      // },
+      // {
+      //   role: "assistant-map",
+      //   content: {
+      //     center: { lat: 40.73, lng: -73.93 },
+      //     zoom: 12,
+      //     markers: [
+      //       { lat: 40.73, lng: -73.93, title: "This is a Marker" },
+      //       { lat: 40.63, lng: -73.89, title: "This is Marker 2" },
+      //     ],
+      //   },
+      // },
     ]);
   }, []);
 
@@ -111,23 +116,51 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <div className="flex flex-col h-screen">
-          <Navbar />
-
-          <div className="flex-1 overflow-auto sm:px-10 pb-4 sm:pb-10">
-            <div className="max-w-[900px] mx-auto mt-4 sm:mt-12">
-              <Chat
-                messages={messages}
-                loading={loading}
-                onSend={handleSend}
-                onReset={handleReset}
-              />
-              <div ref={messagesEndRef} />
+      <div className="flex flex-col h-screen">
+        <div className="flex h-[60px] border-b border-neutral-300 py-4 px-4 sm:px-8 items-center justify-between">
+            <div className="font-bold text-3xl flex items-center">
+                <a
+                    className="ml-2 hover:opacity-50"
+                    href="https://code-scaffold.vercel.app"
+                >
+                    Where Should I Eat?
+                </a>
             </div>
+            <div className="flex justify-end items-center">
+                <ResetChat onReset={handleReset} />
+            </div>
+        </div>
+
+        <div className="flex-1 overflow-auto sm:px-10 pb-4 sm:pb-10">
+          <div className="max-w-[900px] mx-auto mt-4 sm:mt-12">
+            <div className="flex flex-col rounded-lg px-2 sm:p-4">
+              {messages.map((message, index) => (
+                <div key={index} className="my-1 sm:my-1.5">
+                  <ChatMessage message={message} />
+                </div>
+              ))}
+              {loading && (
+                <div className="my-1 sm:my-1.5">
+                  <ChatLoader />
+                </div>
+              )}
+      </div>
+        <div ref={messagesEndRef} />
+
           </div>
           <Footer />
         </div>
-      </NoSSR>
+        <div className="flex h-[30px] sm:h-[56px] py-2 px-8 items-center justify-center">
+      <div className="mt-2 w-full lg:w-2/3">
+        <ChatInput onSend={handleSend} />
+      </div>
+</div>
+
+
+
+      </div>
+    </NoSSR>
+
     </>
   );
 }
