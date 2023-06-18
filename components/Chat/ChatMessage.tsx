@@ -74,7 +74,7 @@ export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
           {message.content.map((url, index) => {
             return (
               <SwiperSlide key={index}>
-                <img src={url}></img>
+                <img className="h-full block m-auto" src={url}></img>
               </SwiperSlide>
             );
           })}
