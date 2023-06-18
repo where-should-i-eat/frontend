@@ -86,9 +86,12 @@ export default function Home() {
     }
   }
 
+  useEffect(()=>{
+    getGeoLocation();
+  }, [])
+  
   useEffect(() => {
     scrollToBottom();
-    getGeoLocation();
   }, [messages]);
 
   useEffect(() => {
