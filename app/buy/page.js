@@ -64,7 +64,7 @@ export default function Home() {
     setMessages([
       {
         role: 'assistant',
-        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. To begin, what type of cuisine you are in the mood for?`,
+        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. What would you like to have tonight?`,
       },
     ]);
   };
@@ -99,7 +99,28 @@ export default function Home() {
     setMessages([
       {
         role: 'assistant',
-        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. To begin, what type of cuisine you are in the mood for?`,
+        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. What would you like to have tonight?`,
+      },
+      {
+        role: 'assistant',
+        content: `Italian:
+*Pizza*: Whether you prefer classic Margherita or want to explore various toppings, pizza is always a crowd-pleaser.
+Pasta: Enjoy a comforting plate of spaghetti carbonara, fettuccine Alfredo, or lasagna.
+Mexican:
+*Tacos*: Try some delicious tacos like carnitas, al pastor, or fish tacos.
+Enchiladas: Savor the flavors of filled tortillas smothered in flavorful sauces like salsa verde or mole.
+Japanese:
+*Sushi*: Indulge in fresh nigiri, maki rolls, or sashimi with your favorite fish or vegetarian fillings.
+Ramen: Enjoy a steaming bowl of ramen with rich broth, tender noodles, and toppings like sliced pork, soft-boiled eggs, and nori.
+Indian:
+*Curry*: Treat yourself to a flavorful curry dish like butter chicken, tikka masala, or vegetable korma.
+Biryani: Delight in aromatic rice cooked with meat, vegetables, and fragrant spices.
+American:
+*Burger*: Customize a juicy burger with your choice of patty, cheese, and toppings like bacon, caramelized onions, or avocado.
+Barbecue: Enjoy some smoky ribs, pulled pork, or brisket accompanied by classic sides like coleslaw and cornbread.
+Mediterranean:
+*Falafel*: Savor crispy chickpea fritters wrapped in pita bread with fresh veggies and tahini sauce.
+Greek Salad: Enjoy a refreshing salad with feta cheese, olives, cucumbers, tomatoes, and a drizzle of olive oil.`,
       },
       // {
       //   role: "assistant-image",
