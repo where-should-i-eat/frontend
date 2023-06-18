@@ -1,20 +1,20 @@
-'use client';
-import { Chat } from '@/components/Chat/Chat';
-import { ChatInput } from '@/components/Chat/ChatInput';
-import { ResetChat } from '@/components/Chat/ResetChat';
-import { ChatMessage } from '@/components/Chat/ChatMessage';
-import { ChatLoader } from '@/components/Chat/ChatLoader';
+"use client";
+import { Chat } from "@/components/Chat/Chat";
+import { ChatInput } from "@/components/Chat/ChatInput";
+import { ResetChat } from "@/components/Chat/ResetChat";
+import { ChatMessage } from "@/components/Chat/ChatMessage";
+import { ChatLoader } from "@/components/Chat/ChatLoader";
 
-import { Footer } from '@/components/Layout/Footer';
-import { Navbar } from '@/components/Layout/Navbar';
-import { Message } from '@/types';
-import Head from 'next/head';
-import NoSSR from 'react-no-ssr';
-import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-import Link from 'next/link';
+import { Footer } from "@/components/Layout/Footer";
+import { Navbar } from "@/components/Layout/Navbar";
+import { Message } from "@/types";
+import Head from "next/head";
+import NoSSR from "react-no-ssr";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import Link from "next/link";
 
-import initialPrompt from '@/components/prompts/initialPrompt'
+import initialPrompt from "@/components/prompts/initialPrompt";
 
 export default function Home() {
   const [messages, setMessages] = useState([]);
@@ -24,7 +24,7 @@ export default function Home() {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSend = async (message) => {
@@ -33,55 +33,55 @@ export default function Home() {
     setMessages(updatedMessages);
     setLoading(true);
 
-    if (location === undefined){
-      getGeoLocation()
+    if (location === undefined) {
+      getGeoLocation();
     }
 
     const backendUrl = process.env.BACKEND_URL;
 
-    console.log('Sending to ', backendUrl);
+    console.log("Sending to ", backendUrl);
     const response = await axios.post(
       `${backendUrl}/api/chat`,
       { messages: updatedMessages, location: location },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       }
     );
 
     if (response.status != 200) {
       setLoading(false);
-      console.log('RESPONSE FAILED:', response);
+      console.log("RESPONSE FAILED:", response);
       throw new Error(response.statusText);
     }
 
-    console.log('RESPONSE SUCCESSFUL', response);
+    console.log("RESPONSE SUCCESSFUL", response);
     const data = response.data;
     if (!data) {
       return;
     }
 
     setLoading(false);
-    setMessages(data['messages']);
+    setMessages(data["messages"]);
   };
 
   const handleReset = async () => {
     setMessages([
       {
-        role: 'assistant',
-        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. What would you like to have tonight?`,
+        role: "assistant",
+        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. Would you like somewhere *closeby* or *in another location*?`,
       },
     ]);
-    getGeoLocation()
+    getGeoLocation();
   };
 
   function getGeoLocation() {
-    console.log('Getting Location');
+    console.log("Getting Location");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
     } else {
-      console.log('Geolocation not supported');
+      console.log("Geolocation not supported");
     }
     function success(position) {
       const latitude = position.coords.latitude;
@@ -90,8 +90,15 @@ export default function Home() {
       console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
     }
     function error() {
-      console.log('Unable to retrieve your location');
-      setMessages([...initialPrompt, {role: 'assistant', content: "It seems I don't have access to your location. Could you give me your street address or ZIP code so that I can find restaurants near you?"}])
+      console.log("Unable to retrieve your location");
+      setMessages([
+        ...initialPrompt,
+        {
+          role: "assistant",
+          content:
+            "It seems I don't have access to your location. Could you give me your street address or ZIP code so that I can find restaurants near you?",
+        },
+      ]);
     }
   }
 
@@ -137,7 +144,12 @@ export default function Home() {
               <div className="flex flex-col rounded-lg px-2 sm:p-4">
                 {messages.map((message, index) => (
                   <div key={index} className="my-1 sm:my-1.5">
-                    <ChatMessage message={message} onClickTag={(tag)=>{handleSend({role:"user", content:tag})}}/>
+                    <ChatMessage
+                      message={message}
+                      onClickTag={(tag) => {
+                        handleSend({ role: "user", content: tag });
+                      }}
+                    />
                   </div>
                 ))}
                 {loading && (
