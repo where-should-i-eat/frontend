@@ -4,6 +4,7 @@ import { FC } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import GoogleMapReact from 'google-map-react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,10 +14,7 @@ interface Props {
 }
 
 export const ChatMessage: FC<Props> = ({ message }) => {
-  if (message.role === 'assistant-images') {
-    if(typeof(message.content)==="string"){
-      return <></>
-    }
+  if (message.role === 'assistant-images' && Array.isArray(message.content)) {
       return (
         <div className="flex justify-start max-w-[67%]">
           <Swiper
@@ -26,7 +24,7 @@ export const ChatMessage: FC<Props> = ({ message }) => {
           >
             {message.content.map((url, index) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={index}>
                   <img src={url}></img>
                 </SwiperSlide>
               );
@@ -35,7 +33,46 @@ export const ChatMessage: FC<Props> = ({ message }) => {
         </div>
       );
   }
-  
+  if (message.role === 'assistant-map' && typeof message.content === 'object' && !Array.isArray(message.content ) ){
+    console.log("Printing Map", message.content);
+    console.log(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+    message.content.center as any;
+    const renderMarkers = (map:any, maps:any) => {
+      let marker = new maps.Marker({
+        position: {
+          lat: ((message.content as any).marker as any).lat,
+          lng: ((message.content as any).marker as any).lng,
+        },
+        map,
+        title: ((message.content as any).marker as any).title,
+      });
+      let infowindow = new maps.InfoWindow({
+        content: ((message.content as any).marker as any).title,
+      });
+
+      marker.addListener('click', function () {
+        infowindow.open(map, marker);
+      });
+      
+      return marker;
+    };
+    return (
+      <div
+        className="flex justify-start max-w-[67%] max-h-[67%]"
+        style={{ height: '100vh', width: '100%' }}
+      >
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
+          }}
+          defaultCenter={message.content.center}
+          defaultZoom={message.content.zoom}
+          onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
+        ></GoogleMapReact>
+      </div>
+    );
+  }
+
   if(typeof(message.content)!=="string"){
       return <></>
   }

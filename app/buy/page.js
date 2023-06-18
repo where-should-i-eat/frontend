@@ -78,7 +78,15 @@ export default function Home() {
       {
         role: "assistant-images",
         content: [`https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`, `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`, `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1920px-Image_created_with_a_mobile_phone.png`]
-      }
+      },
+      {
+        role: "assistant-map",
+        content: {
+          center: {lat: 40.73, lng: -73.93}, 
+          zoom: 12,
+          marker: {lat: 40.73, lng: -73.93, title: "This is a Marker"}
+        }
+      },
     ]);
   }, []);
 
