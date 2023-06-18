@@ -19,7 +19,7 @@ import initialPrompt from '@/components/prompts/initialPrompt'
 export default function Home() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState({ lat: 40.73, lng: -73.93 });
+  const [location, setLocation] = useState(undefined);
 
   const messagesEndRef = useRef(null);
 
