@@ -70,7 +70,7 @@ export default function Home() {
     setMessages([
       {
         role: "assistant",
-        content: `Hello! I am a helpful AI assistant designed to help you choose a restaurant. Would you like somewhere *closeby* or *in another location*?`,
+        content: `Hello! I'm your personal AI assistant designed to help you choose a restaurant nearby. To start, what type of cuisine would you prefer? For example, *Italian* 🍝, *Japanese* 🍣, *Mexican* 🌮, or *something else* 😄?`,
       },
     ]);
     getGeoLocation();
