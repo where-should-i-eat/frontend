@@ -10,25 +10,73 @@ import { Parser } from "html-to-react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const rawHTML = `
-<div>
-  <h1>The Second Example</h1>
-  <p>The <strong>rat</strong> hates the <strong>cat</strong></p>
-  <p><i>This is something special</i></p>
-  <hr/>  
-  <div>
-    <img src="https://www.kindacode.com/wp-content/uploads/2021/06/pi-2.jpeg" width="500"/>
-  </div>
-  <hr/>  
-  <h4>Just Another Heading</h4>
-</div>
-`;
-
 interface Props {
   message: Message;
 }
 
 export const ChatMessage: FC<Props> = ({ message }) => {
+  const handleClick = (content: string) => {
+    console.log(content);
+  };
+
+  interface ButtonProps {
+    content: string;
+  }
+
+  function Button({ content }: ButtonProps): JSX.Element {
+    return (
+      <button
+        onClick={() => handleClick(content)}
+        className="underline text-blue-500"
+      >
+        {content}
+      </button>
+    );
+  }
+
+  interface ParagraphProps {
+    content: string;
+  }
+
+  function Paragraph({ content }: ParagraphProps): JSX.Element {
+    return <p>{content}</p>;
+  }
+
+  type ReplaceResult = JSX.Element | string;
+
+  function replaceWithButtons(str: string): ReplaceResult[] {
+    const regex = /\*(.*?)\*/g;
+    const result: ReplaceResult[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(str)) !== null) {
+      const buttonContent = match[1];
+      const buttonElement = (
+        <Button key={match.index} content={buttonContent} />
+      );
+
+      // Add the text before the matched substring
+      if (match.index > lastIndex) {
+        const beforeText = str.substring(lastIndex, match.index);
+        result.push(beforeText);
+      }
+
+      // Add the button element
+      result.push(buttonElement);
+
+      lastIndex = regex.lastIndex;
+    }
+
+    // Add the remaining text after the last match
+    if (lastIndex < str.length) {
+      const afterText = str.substring(lastIndex);
+      result.push(afterText);
+    }
+
+    return result;
+  }
+
   if (message.role === "assistant-images" && Array.isArray(message.content)) {
     return (
       <div className="flex justify-start max-w-[67%]">
@@ -117,8 +165,7 @@ export const ChatMessage: FC<Props> = ({ message }) => {
           } rounded-2xl px-3 py-2 max-w-[67%] whitespace-pre-wrap`}
           style={{ overflowWrap: "anywhere" }}
         >
-          {message.content}
-          {Parser().parse(rawHTML)}
+          {<div>{replaceWithButtons(message.content)}</div>}
         </div>
       </div>
     );
