@@ -5,7 +5,6 @@ import { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import GoogleMapReact from "google-map-react";
-import { Parser } from "html-to-react";
 
 import "swiper/css";
 import "swiper/css/navigation";
