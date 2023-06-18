@@ -18,14 +18,13 @@ interface Props {
 export const ChatMessage: FC<Props> = ({ message, onClickTag }) => {
   const handleClick = (content: string) => {
     onClickTag(content);
-    // console.log(content);
   };
 
   function Button({ content }: ButtonProps): JSX.Element {
     return (
       <button
         onClick={() => handleClick(content)}
-        className="underline text-blue-500"
+        className="rounded transition-all duration-200 underline text-blue-500 hover:shadow-md hover:bg-orange-300 hover:text-blue-700"
       >
         {content}
       </button>
